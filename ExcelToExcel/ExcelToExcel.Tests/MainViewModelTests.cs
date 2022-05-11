@@ -61,6 +61,7 @@ namespace ExcelToExcel.Tests
         {
             var filename = Path.Combine(excelFilesPath, "liste_especes.xlsx");
             vm.InputFilename = filename;
+            vm.OutputFilename = "liste_especes.xlsx";
 
 
             var actual = vm.SaveCommand.CanExecute(filename);
@@ -72,6 +73,7 @@ namespace ExcelToExcel.Tests
         {
             var filename = Path.Combine(excelFilesPath, "liste_especes.xlsx");
             vm.InputFilename = filename;
+            vm.OutputFilename = "liste_especes.xlsx";
 
             vm.LoadContentCommand.Execute("");
             var actual = vm.SaveCommand.CanExecute(filename);
@@ -80,6 +82,17 @@ namespace ExcelToExcel.Tests
         }
 
         // TODO : Q03 : Créer le test CanExecuteSaveCommand_OutputFileInvalid_ShouldReturn_False
+        [Theory]
+        [MemberData(nameof(InvalidFileNameTestData))]
+        public void CanExecuteSaveCommand_OutputFileInvalid_ShouldReturn_False(string fn)
+        {
+            var filename = Path.Combine(excelFilesPath, fn);
+            vm.OutputFilename = filename;
+
+            var actual = vm.SaveCommand.CanExecute(filename);
+
+            Assert.False(actual);
+        }
 
         // TODO : Q04 : Créer le test CanExecuteSaveCommand_OutputFileValid_ShouldReturn_True(string filename)
 
@@ -250,11 +263,14 @@ namespace ExcelToExcel.Tests
         public static IEnumerable<object[]> GoodExcelFileTestData = new List<object[]>
         {
             new object[] {"liste_especes.xlsx"},
-            new object[] {"liste_especes_multifeuilles.xlsx"},           
+            new object[] {"liste_especes_multifeuilles.xlsx"},
         };
 
-        public static IEnumerable<object[]> EmptyFileNameTestData = new List<object[]>
+        public static IEnumerable<object[]> InvalidFileNameTestData = new List<object[]>
         {
+            new object[] {"*%#?!@&U#&!#%HADHSDF$?.xlsx"},
+            new object[] {"liste&especes.xlsx"},
+            new object[] {"                    %                "},
             new object[] {""},
         };
 
