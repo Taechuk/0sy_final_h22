@@ -143,24 +143,22 @@ namespace ExcelToExcel.ViewModels
             /// TODO : S'assurer que les tests de la commande fonctionne
             /// 
             bool result;
-            if (OutputFilename == "")
-                return false;
-
             result = true;
-            string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+            var temp = true;
+            string invalid = new string(Path.GetInvalidPathChars());
             foreach (char c in invalid)
             {
                 foreach (char g in OutputFilename)
                 {
-                    result = !(c == g);//si un char invalide est dans le nom
-                    if (!result)//on quitte la boucle
-                        break;
+                    if (c == g)
+                        temp = false;//si un char invalide est dans le nom
+                    if (!temp)//on quitte la boucle
+                        result = false;
                 }
-                if (!result)
-                    break;
             }
             if (!result)
                 return result;
+
 
             try
             {

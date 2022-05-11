@@ -55,7 +55,7 @@ namespace ExcelToExcel.Tests
             Assert.Equal(expected, actual);
         }
 
-        // TODO : Q02 : Créer le test CanExecuteSaveCommand_FileNotLoaded_ShouldReturn_False
+        // xTODO : Q02 : Créer le test CanExecuteSaveCommand_FileNotLoaded_ShouldReturn_False
         [Fact]
         public void CanExecuteSaveCommand_FileNotLoaded_ShouldReturn_False()
         {
@@ -87,8 +87,12 @@ namespace ExcelToExcel.Tests
         public void CanExecuteSaveCommand_OutputFileInvalid_ShouldReturn_False(string fn)
         {
             var filename = Path.Combine(excelFilesPath, fn);
+            var goodfn = Path.Combine(excelFilesPath, "liste_especes.xlsx");//verif de nom, pas de fichier ouvert
+            vm.InputFilename = goodfn;
             vm.OutputFilename = filename;
 
+
+            vm.LoadContentCommand.Execute(goodfn);
             var actual = vm.SaveCommand.CanExecute(filename);
 
             Assert.False(actual);
@@ -96,6 +100,20 @@ namespace ExcelToExcel.Tests
 
         // TODO : Q04 : Créer le test CanExecuteSaveCommand_OutputFileValid_ShouldReturn_True(string filename)
 
+        [Theory]
+        [MemberData(nameof(ValidFileNameTestData))]
+        public void CanExecuteSaveCommand_OutputFileValid_ShouldReturn_True(string fn)
+        {
+            var filename = Path.Combine(excelFilesPath, fn);
+            var goodfn = Path.Combine(excelFilesPath, "liste_especes.xlsx");//verif de nom, pas de fichier ouvert
+            vm.InputFilename = goodfn;
+            vm.OutputFilename = filename;
+
+            vm.LoadContentCommand.Execute(goodfn);
+            var actual = vm.SaveCommand.CanExecute(filename);
+
+            Assert.True(actual);
+        }
 
         #endregion
 
@@ -268,10 +286,17 @@ namespace ExcelToExcel.Tests
 
         public static IEnumerable<object[]> InvalidFileNameTestData = new List<object[]>
         {
-            new object[] {"*%#?!@&U#&!#%HADHSDF$?.xlsx"},
-            new object[] {"liste&especes.xlsx"},
-            new object[] {"                    %                "},
-            new object[] {""},
+            new object[] {"*%#?!@&U#&!#%!|{}[}{HA>DHSDF$?.xlsx"},
+            new object[] {"liste<<>|especes.xlsx"},
+            new object[] {"                   ?|#@!@#$%?&*()                 "},
+        };
+
+        public static IEnumerable<object[]> ValidFileNameTestData = new List<object[]>
+        {
+            new object[] {"liste_especes.xlsx"},
+            new object[] {"un_nouveau_fichier.xlsx"},
+            new object[] {"POURQUOI4VALEURS"},
+            new object[] {"ahcelaneverifiepaslesextentions"},
         };
 
         #endregion
