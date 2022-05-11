@@ -139,7 +139,21 @@ namespace ExcelToExcel.Tests
             Assert.Throws<ArgumentException>(act);
 
         }
+        //Q08
+        [Theory]
+        [MemberData(nameof(BadFileNamesTestData))]
+        public void SaveToFile_BadFileName_Should_Fail(string fn)
+        {
+            var filename = Path.Combine(excelFilesPath, fn);
+            var especeXL = new EspeceXL(filename);
 
+            Action act = () => especeXL.SaveToFile(filename);
+
+            Assert.Throws<ArgumentException>(act);
+
+        }
+
+        
 
         public static IEnumerable<object[]> BadExcelFilesTestData = new List<object[]>
         {
@@ -161,6 +175,14 @@ namespace ExcelToExcel.Tests
             new object[] {":/\n.xlsx"},
             new object[] {"*?.json"},
             new object[] {"||||||||||"},
+        };
+
+        public static IEnumerable<object[]> BadExtensionTestData = new List<object[]>
+        {
+            new object[] {"NotACSV.csw"},
+            new object[] {"NotAJSon.jar"},
+            new object[] {"NotAXlsx.docx"},
+            new object[] {"Nothing"},
         };
     }
 }
