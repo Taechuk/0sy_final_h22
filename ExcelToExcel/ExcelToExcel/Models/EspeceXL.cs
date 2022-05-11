@@ -133,6 +133,24 @@ namespace ExcelToExcel.Models
         {
             /// TODO : Q05 : Ajouter les validations pour passer les tests
             /// 
+            bool result;
+            result = true;
+            var temp = true;
+            string invalid = new string(Path.GetInvalidFileNameChars());
+            foreach (char c in invalid)
+            {
+                foreach (char g in Path.GetFileName(filename))
+                {
+                    if (c == g)
+                        temp = false;//si un char invalide est dans le nom
+                    if (!temp)//on quitte la boucle
+                        result = false;
+                }
+            }
+            if(!result)
+            {
+                throw new ArgumentException();
+            }
 
             var output = GetCSV();
 
