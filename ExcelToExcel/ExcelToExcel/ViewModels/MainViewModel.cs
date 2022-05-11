@@ -84,12 +84,20 @@ namespace ExcelToExcel.ViewModels
 
             if (!string.IsNullOrEmpty(obj))
                 InputFilename = obj;
+            
+            if(InputFilename == "")
+            {
+                Message = "";
+                return false;
+            }
 
             var fileExists = File.Exists(InputFilename);
 
             if (!fileExists)
             {
+                
                 Message = "Fichier inexistant!";
+
                 result = false;
             }
             else
