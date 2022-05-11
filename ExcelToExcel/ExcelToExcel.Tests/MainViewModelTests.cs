@@ -41,8 +41,8 @@ namespace ExcelToExcel.Tests
         [Fact]
         public void InputFile_IsEmpty_Message_ShouldBe_Empty()
         {
-            /// TODO : Q01a. Compléter le test
-            /// TODO : Q01b. Ne pas briser la batterie de tests après ce tests
+            /// xTODO : Q01a. Compléter le test
+            /// xTODO : Q01b. Ne pas briser la batterie de tests après ce tests
             var filename = "";
             vm.InputFilename = filename;
             var expected = "";
@@ -56,6 +56,17 @@ namespace ExcelToExcel.Tests
         }
 
         // TODO : Q02 : Créer le test CanExecuteSaveCommand_FileNotLoaded_ShouldReturn_False
+        [Fact]
+        public void CanExecuteSaveCommand_FileNotLoaded_ShouldReturn_False()
+        {
+            var filename = Path.Combine(excelFilesPath, "liste_especes.xlsx");
+            vm.InputFilename = filename;
+
+
+            var actual = vm.SaveCommand.CanExecute(filename);
+
+            Assert.False(actual);
+        }
 
         // TODO : Q03 : Créer le test CanExecuteSaveCommand_OutputFileInvalid_ShouldReturn_False
 

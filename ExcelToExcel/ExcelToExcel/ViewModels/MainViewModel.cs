@@ -142,6 +142,19 @@ namespace ExcelToExcel.ViewModels
         {
             /// TODO : S'assurer que les tests de la commande fonctionne
             /// 
+            try
+            {
+                especes.LoadFile(); //Essaie d'ouvrir le fichier especes
+            }
+            catch(IOException e)//si déja ouvert
+            {
+                return true;//on peut sauvegarder
+            }
+            catch(NullReferenceException e)//aucun fichier espece trouvé (est null)
+            {
+                return false;
+            }
+            
 
             return !string.IsNullOrEmpty(InputFilename);
         }
@@ -150,6 +163,7 @@ namespace ExcelToExcel.ViewModels
         {
             /// TODO : S'assurer que les tests de la commande fonctionne
             /// 
+            
 
             especes.SaveToFile(OutputFilename);
         }
