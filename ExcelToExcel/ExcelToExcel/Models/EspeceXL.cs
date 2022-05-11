@@ -231,7 +231,8 @@ namespace ExcelToExcel.Models
                 default:
                     /// TODO : Q09 Lancer l'exception ArgumentException avec le message "Type inconnu" et le nom du paramètre filename
                     /// 
-                    break;
+                    throw new ArgumentException("Type Inconnu");
+                    
             }
         }
 

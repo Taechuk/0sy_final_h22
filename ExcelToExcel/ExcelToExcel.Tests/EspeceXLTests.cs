@@ -153,7 +153,20 @@ namespace ExcelToExcel.Tests
 
         }
 
-        
+        //Q09
+        [Theory]
+        [MemberData(nameof(BadExtensionTestData))]
+        public void SaveToFile_BadExtension_Should_Fail(string fn)
+        {
+            var filename = Path.Combine(excelFilesPath, fn);
+            var especeXL = new EspeceXL(filename);
+
+            Action act = () => especeXL.SaveToFile(filename);
+
+            Exception ex = Assert.Throws<ArgumentException>(act);
+            Assert.Equal("Type Inconnu", ex.Message);
+        }
+
 
         public static IEnumerable<object[]> BadExcelFilesTestData = new List<object[]>
         {
