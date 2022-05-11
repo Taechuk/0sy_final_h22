@@ -164,6 +164,25 @@ namespace ExcelToExcel.Models
         {
             /// TODO : Q06 Ajouter les validations pour passer les tests
             /// 
+            bool result;
+            result = true;
+            var temp = true;
+            string invalid = new string(Path.GetInvalidFileNameChars());
+            foreach (char c in invalid)
+            {
+                foreach (char g in Path.GetFileName(filename))
+                {
+                    if (c == g)
+                        temp = false;//si un char invalide est dans le nom
+                    if (!temp)//on quitte la boucle
+                        result = false;
+                }
+            }
+            if (!result)
+            {
+                throw new ArgumentException();
+            }
+
             var lst = GetAsList();
 
             string output = JsonConvert.SerializeObject(lst, Formatting.Indented);
@@ -198,9 +217,30 @@ namespace ExcelToExcel.Models
             }
         }
 
-        private void SaveXls(string filename)
+        public void SaveXls(string filename)
         {
             /// TODO : Q07 Ajouter les validations pour passer les tests
+            /// 
+            bool result;
+            result = true;
+            var temp = true;
+            string invalid = new string(Path.GetInvalidFileNameChars());
+            foreach (char c in invalid)
+            {
+                foreach (char g in Path.GetFileName(filename))
+                {
+                    if (c == g)
+                        temp = false;//si un char invalide est dans le nom
+                    if (!temp)//on quitte la boucle
+                        result = false;
+                }
+            }
+            if (!result)
+            {
+                throw new ArgumentException();
+            }
+
+
             wb.SaveAs(filename);
         }
     }

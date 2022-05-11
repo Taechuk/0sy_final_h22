@@ -99,7 +99,7 @@ namespace ExcelToExcel.Tests
             Assert.Throws<ArgumentException>(act);
         }
 
-        // TODO : Q05 : Créez le test « SaveCSV_BadFileName_Should_Fail »
+        // xTODO : Q05 : Créez le test « SaveCSV_BadFileName_Should_Fail »
         [Theory]
         [MemberData(nameof(BadFileNamesTestData))]
         public void SaveCSV_BadFileName_Should_Fail(string fn)
@@ -114,8 +114,32 @@ namespace ExcelToExcel.Tests
         }
 
         // TODO : Q06 : Créez le test « SaveJson_BadFileName_Should_Fail »
+        [Theory]
+        [MemberData(nameof(BadFileNamesTestData))]
+        public void SaveJson_BadFileName_Should_Fail(string fn)
+        {
+            var filename = Path.Combine(excelFilesPath, fn);
+            var especeXL = new EspeceXL(filename);
 
+            Action act = () => especeXL.SaveJson(filename);
+
+            Assert.Throws<ArgumentException>(act);
+
+        }
         // TODO : Q07 : Créez le test « SaveXls_BadFileName_Should_Fail »
+        [Theory]
+        [MemberData(nameof(BadFileNamesTestData))]
+        public void SaveXls_BadFileName_Should_Fail(string fn)
+        {
+            var filename = Path.Combine(excelFilesPath, fn);
+            var especeXL = new EspeceXL(filename);
+
+            Action act = () => especeXL.SaveXls(filename);
+
+            Assert.Throws<ArgumentException>(act);
+
+        }
+
 
         public static IEnumerable<object[]> BadExcelFilesTestData = new List<object[]>
         {
