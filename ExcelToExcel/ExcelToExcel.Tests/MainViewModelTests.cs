@@ -67,6 +67,17 @@ namespace ExcelToExcel.Tests
 
             Assert.False(actual);
         }
+        [Fact]
+        public void CanExecuteSaveCommand_FileLoaded_ShouldReturn_True()
+        {
+            var filename = Path.Combine(excelFilesPath, "liste_especes.xlsx");
+            vm.InputFilename = filename;
+
+            vm.LoadContentCommand.Execute("");
+            var actual = vm.SaveCommand.CanExecute(filename);
+
+            Assert.True(actual);
+        }
 
         // TODO : Q03 : Créer le test CanExecuteSaveCommand_OutputFileInvalid_ShouldReturn_False
 
